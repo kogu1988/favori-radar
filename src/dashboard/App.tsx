@@ -27,6 +27,129 @@ interface ListingView extends TrackedListing {
   prices: PriceObservation[];
 }
 
+const demoListings: ListingView[] = [
+  {
+    id: "1234567890",
+    favoriteListName: "Otomobil",
+    kind: "car",
+    url: "https://www.sahibinden.com/ilan/1234567890",
+    title: "2022 model, düşük kilometre, bakımlı otomobil",
+    category: "Otomobil / Sedan",
+    location: "İstanbul / Kadıköy",
+    imageUrl: null,
+    images: [],
+    description: "Düzenli bakımları yapılmış örnek ilan.",
+    attributes: { Marka: "Örnek", Model: "Sedan", Yıl: "2022" },
+    seller: {
+      displayName: "Örnek Satıcı",
+      type: "individual",
+      profileUrl: null,
+      phone: null
+    },
+    status: "active",
+    firstSeenAt: "2026-05-20T10:00:00.000Z",
+    lastSeenAt: "2026-06-12T09:30:00.000Z",
+    currentPrice: 1245000,
+    previousPrice: 1299000,
+    priceChange: -54000,
+    priceChangeRate: -4.16,
+    prices: []
+  },
+  {
+    id: "1234567891",
+    favoriteListName: "Otomobil",
+    kind: "car",
+    url: "https://www.sahibinden.com/ilan/1234567891",
+    title: "Otomatik vites, temiz kullanılmış aile aracı",
+    category: "Otomobil / Hatchback",
+    location: "Ankara / Çankaya",
+    imageUrl: null,
+    images: [],
+    description: "Ekspertiz bilgileri bulunan örnek ilan.",
+    attributes: { Marka: "Örnek", Model: "Hatchback", Yıl: "2021" },
+    seller: {
+      displayName: "Örnek Galeri",
+      type: "business",
+      profileUrl: null,
+      phone: null
+    },
+    status: "active",
+    firstSeenAt: "2026-05-24T12:00:00.000Z",
+    lastSeenAt: "2026-06-12T09:30:00.000Z",
+    currentPrice: 985000,
+    previousPrice: 985000,
+    priceChange: 0,
+    priceChangeRate: 0,
+    prices: []
+  },
+  {
+    id: "1234567892",
+    favoriteListName: "Motosiklet",
+    kind: "motorcycle",
+    url: "https://www.sahibinden.com/ilan/1234567892",
+    title: "Şehir içi kullanıma uygun motosiklet",
+    category: "Motosiklet",
+    location: "İzmir",
+    imageUrl: null,
+    images: [],
+    description: "Örnek ilan açıklaması.",
+    attributes: { Yıl: "2023" },
+    seller: { displayName: null, type: "unknown", profileUrl: null, phone: null },
+    status: "active",
+    firstSeenAt: "2026-06-01T12:00:00.000Z",
+    lastSeenAt: "2026-06-12T09:30:00.000Z",
+    currentPrice: 215000,
+    previousPrice: 205000,
+    priceChange: 10000,
+    priceChangeRate: 4.88,
+    prices: []
+  },
+  {
+    id: "1234567893",
+    favoriteListName: "Konut",
+    kind: "housing",
+    url: "https://www.sahibinden.com/ilan/1234567893",
+    title: "Merkezi konumda örnek konut ilanı",
+    category: "Satılık Daire",
+    location: "Bursa",
+    imageUrl: null,
+    images: [],
+    description: "Örnek ilan açıklaması.",
+    attributes: { "Oda Sayısı": "3+1" },
+    seller: { displayName: null, type: "unknown", profileUrl: null, phone: null },
+    status: "active",
+    firstSeenAt: "2026-06-02T12:00:00.000Z",
+    lastSeenAt: "2026-06-12T09:30:00.000Z",
+    currentPrice: 4250000,
+    previousPrice: null,
+    priceChange: null,
+    priceChangeRate: null,
+    prices: []
+  },
+  {
+    id: "1234567894",
+    favoriteListName: "Arsa",
+    kind: "land",
+    url: "https://www.sahibinden.com/ilan/1234567894",
+    title: "Yatırıma uygun örnek arsa ilanı",
+    category: "Satılık Arsa",
+    location: "Muğla",
+    imageUrl: null,
+    images: [],
+    description: "Örnek ilan açıklaması.",
+    attributes: { "Metrekare": "500" },
+    seller: { displayName: null, type: "unknown", profileUrl: null, phone: null },
+    status: "active",
+    firstSeenAt: "2026-06-03T12:00:00.000Z",
+    lastSeenAt: "2026-06-12T09:30:00.000Z",
+    currentPrice: 1750000,
+    previousPrice: null,
+    priceChange: null,
+    priceChangeRate: null,
+    prices: []
+  }
+];
+
 const priceFormatter = new Intl.NumberFormat("tr-TR", {
   style: "currency",
   currency: "TRY",
@@ -193,9 +316,28 @@ function ListingDetails({
 }
 
 export function App() {
-  const [listings, setListings] = useState<ListingView[]>([]);
-  const [scanStatus, setScanStatus] = useState<ScanStatus | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const demoMode = new URLSearchParams(window.location.search).get("demo") === "store";
+  const [listings, setListings] = useState<ListingView[]>(
+    demoMode ? demoListings : []
+  );
+  const [scanStatus, setScanStatus] = useState<ScanStatus | null>(
+    demoMode
+      ? {
+          phase: "completed",
+          listingCount: 49,
+          lists: [
+            { name: "Otomobil", count: 14 },
+            { name: "Motosiklet", count: 18 },
+            { name: "Konut", count: 2 },
+            { name: "Arsa", count: 10 },
+            { name: "Diğer", count: 5 }
+          ]
+        }
+      : null
+  );
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    demoMode ? "Otomobil" : null
+  );
   const [selectedListingId, setSelectedListingId] = useState<string | null>(null);
   const [scanStarting, setScanStarting] = useState(false);
 
@@ -234,6 +376,7 @@ export function App() {
   };
 
   useEffect(() => {
+    if (demoMode) return;
     refresh();
     if (!globalThis.chrome?.storage?.local) return;
     void chrome.storage.local
@@ -249,7 +392,7 @@ export function App() {
     };
     chrome.storage.onChanged.addListener(listener);
     return () => chrome.storage.onChanged.removeListener(listener);
-  }, []);
+  }, [demoMode]);
 
   const categories = useMemo(() => {
     const counts = new Map<string, number>();

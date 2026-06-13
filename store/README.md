@@ -3,6 +3,9 @@
 Bu klasör Chrome Web Store formuna girilecek metinleri ve inceleme notlarını
 içerir.
 
+Yayınlanan eklenti:
+https://chromewebstore.google.com/detail/cmejkljkiihmpnhapmpidckmfmiakcno
+
 ## Yayın Sırası
 
 1. `npm run release` komutunu çalıştırın.
@@ -16,10 +19,8 @@ içerir.
 8. Dağıtımı ilk incelemede `Unlisted` seçerek test edin; onay sonrası isterseniz
    `Public` yapın.
 
-## Kalan Manuel İşler
+## Sonraki Sürümler
 
-- Gizlilik politikasını herkese açık bir HTTPS sayfasında yayınlamak.
 - Gerçek verileri maskeleyerek en az bir 1280x800 veya 640x400 ekran görüntüsü
   hazırlamak.
-- Geliştirici hesabı iletişim e-postasını doğrulamak.
 - Sahibinden.com ile resmi bağlantı bulunmadığını mağaza açıklamasında korumak.

@@ -3,6 +3,10 @@
 Favori ilanların bilgilerini ve fiyat geçmişini kullanıcının cihazında tutan
 hafif bir Chrome/Edge eklentisi.
 
+## Chrome Web Store
+
+[Favori Radar'ı Chrome'a ekleyin](https://chromewebstore.google.com/detail/cmejkljkiihmpnhapmpidckmfmiakcno)
+
 ## Geliştirme
 
 ```powershell
